@@ -1,0 +1,16 @@
+{
+    "name": "mas/acl",
+    "description": "this is my first composer plugin",
+    "autoload": {
+        "psr-4": {
+            "Mas\\Acl\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Sam Zheng",
+            "email": "sam33339999@gmail.cm"
+        }
+    ],
+    "require": {}
+}
