@@ -26,7 +26,9 @@ class ACL
         $modeStr = decbin($mode);
         $permissions = [];
 
-        array_walk(str_split($modeStr), function ($it, $key) use (&$permissions){
+        $modeArr = str_split(str_pad($modeStr, 4, STR_PAD_LEFT));
+
+        array_walk($modeArr, function ($it, $key) use (&$permissions){
             if ($it) {
                 switch ($key) {
                     case 0:
