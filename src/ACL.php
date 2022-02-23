@@ -26,7 +26,7 @@ class ACL
         $modeStr = decbin($mode);
         $permissions = [];
 
-        $modeArr = str_split(str_pad($modeStr, 4, STR_PAD_LEFT));
+        $modeArr = str_split(str_pad($modeStr, 4, 0, STR_PAD_LEFT));
 
         array_walk($modeArr, function ($it, $key) use (&$permissions){
             if ($it) {
@@ -50,25 +50,26 @@ class ACL
         return $permissions;
     }
 
-    public function getPermissionNum(array $permissionArr): int
+    public static function getPermissionNum(string ...$permissions): int
     {
         $permissionNum = 0;
         
-        if ($permissionArr['create']) {
-            $permissionNum += self::CREATE;
-        }
+        $permissionNum += in_array(
+            self::MAPPING_STATE[self::CREATE], $permissions
+        ) ? self::CREATE : 0;
+        
+        $permissionNum += in_array(
+            self::MAPPING_STATE[self::READ], $permissions
+        ) ? self::READ : 0;
 
-        if ($permissionArr['read']) {
-            $permissionNum += self::READ;
-        }
+        $permissionNum += in_array(
+            self::MAPPING_STATE[self::WRITE], $permissions
+        ) ? self::WRITE : 0;
 
-        if ($permissionArr['write']) {
-            $permissionNum += self::WRITE;
-        }
+        $permissionNum += in_array(
+            self::MAPPING_STATE[self::DELETE], $permissions
+        ) ? self::DELETE : 0;
 
-        if ($permissionArr['delete']) {
-            $permissionNum += self::DELETE;
-        }
 
         return $permissionNum;
     }
