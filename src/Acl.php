@@ -3,7 +3,7 @@ namespace Mas\Acl;
 
 use Mas\Acl\Exceptions\InvalidModeInput;
 
-class ACL 
+class Acl 
 {
     const CREATE = 8;
     const READ = 4;
@@ -17,6 +17,12 @@ class ACL
         self::DELETE => 'delete',
     ];
 
+    /**
+     * @param ?int 權限數字，介於 0 ~ 15 間
+     * @throws InvalidModeInput
+     * 
+     * @return array 擁有的權限
+     */
     public static function getState(?int $mode): array
     {
         if ($mode > 15 || is_null($mode)) {
@@ -50,6 +56,11 @@ class ACL
         return $permissions;
     }
 
+    /**
+     * @param string[] 輸入擁有的權限 create, read, write, delete
+     * 
+     * @return int 權限數字，介於 0 ~ 15 間
+     */
     public static function getPermissionNum(string ...$permissions): int
     {
         $permissionNum = 0;
